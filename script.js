@@ -10,9 +10,10 @@ window.addEventListener('load', function() {
             window.addEventListener('keydown', e => {
                 if (((e.key === 'ArrowUp') ||
                     (e.key === 'ArrowDown') ||
-                    (e.key === 'ArrowRight')) 
+                    (e.key === 'ArrowRight') ||
+                    (e.key === 'ArrowLeft')) 
                     && this.game.keys.indexOf(e.key) === -1) {
-                    this.game.keys.push(e.key);
+                    this.game.keys.push(e.key)
                 }
                 console.log(this.game.keys);
             });
@@ -23,8 +24,16 @@ window.addEventListener('load', function() {
             });
         }
     }
-    class Projectile {
-
+    class Sword {
+        constructor(game) {
+            this.game = game;
+            this.width = 100;
+            this.height = 100;
+            this.x = 300;
+            this.y = 150;
+        }
+        update() {
+        }
     }
     class Particle {
 
@@ -38,24 +47,57 @@ window.addEventListener('load', function() {
             this.y = 100;
             this.speedY = 0;
             this.speedX = 0;
+            this.knockbackCooldown = 0;
 
-            this.image = new Image();
-           this.image.src = 'https://htmlhoster.com/p/V24GS21N/pixil-frame-0.png'
+            this.image = document.getElementById('player');
         }
 
         update() {
-            if (this.game.keys.includes('ArrowUp')) {
-                this.speedY = -1;
+            // Show sword once scene 2 starts
+            if (window.sceneStep >= 1) {
+                const sword = document.getElementById('sword');
+                sword.style.display = 'block';
+                if (window.sceneStep >= 2) {
+                    sword.style.left = 300 + 'px';
+                    sword.style.top = 150 + 'px';
+                    sword.style.height = 100 + 'px';
+                    sword.style.width = 100 + 'px';
+                }
             }
+
+            // Monster collision check (only during scene 2)
+            if (window.sceneStep === 1) {
+                const monster = document.getElementById('monster');
+                monster.style.display = 'block';
+                const monsterX = 400;
+                const monsterY = 150;
+                const monsterWidth = 100;
+                const monsterHeight = 100;
+
+                if (this.knockbackCooldown > 0) this.knockbackCooldown--;
+
+                const touching = this.x < monsterX + monsterWidth &&
+                    this.x + this.width > monsterX &&
+                    this.y < monsterY + monsterHeight &&
+                    this.y + this.height > monsterY;
+
+                if (touching && this.knockbackCooldown === 0) {
+                    this.x -= 50;
+                    this.knockbackCooldown = 30;
+                }
+            }
+
+            if (this.game.keys.includes('ArrowUp')) this.speedY = -1;
             else if (this.game.keys.includes('ArrowDown')) this.speedY = 1;
             else if (this.game.keys.includes('ArrowRight')) this.speedX = 1;
+            else if (this.game.keys.includes('ArrowLeft')) this.speedX = -1;
             else {
                 this.speedY = 0;
                 this.speedX = 0;
             }
             this.y += this.speedY;
             this.x += this.speedX;
-            if (this.y > 100) this.y = 100;
+            if (this.y > 150) this.y = 150;
             if (this.y < 50) this.y = 50;
         }
         draw(context) {
@@ -103,7 +145,6 @@ window.addEventListener('load', function() {
     class UI {
 
     }
-    // brain of project
     class Game {
         constructor(width, height) {
             this.width = width;

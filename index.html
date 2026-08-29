@@ -9,26 +9,39 @@
     </head>
     <body>
         <!--players-->
+        <img id="player" src="https://htmlhoster.com/p/V24GS21N/pixil-frame-0.png">
         <!--environment-->
         <img id="layer1" src="https://htmlhoster.com/p/VSSNR176/Untitled7_20260829130330%20(2).PNG" style="position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; z-index: 15;">
         <img id="bg" src="https://htmlhoster.com/p/8Z169XX4/Screenshot_29-8-2026_113458_hdwallsbox.com.jpeg" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; transition: opacity 0.5s;">
-        
-     
+        <img id="sword" src="https://htmlhoster.com/p/7HPKWHFG/image-removebg-preview%20(13).png">
+       <img id="monster" src="https://cdna.artstation.com/p/assets/images/images/078/094/398/original/martina-reynoso-sprite-minion-hchtelegoth.gif?1721174886" style="display: none; position: fixed; width: 150px; height: 150px; object-fit: contain; z-index: 999; bottom: 0; left: 400px;">
         
         <canvas id="canvas1"></canvas> <!--don't delete-->
-        
-  <script src="script.js"></script>
+ 
+<script src="script.js"></script>
 <script>
+window.sceneStep = 0;
 let bgElapsed = 0;
-let bgChanged = false;
 setInterval(() => {
     bgElapsed += 100;
-    if (bgElapsed > 4000 && !bgChanged) {
-        bgChanged = true;
-        const img = document.getElementById('bg');
+    const img = document.getElementById('bg');
+
+    if (bgElapsed > 15000 && window.sceneStep === 0) {
+        window.sceneStep = 1;
         img.style.opacity = '0';
         setTimeout(() => {
             img.src = 'https://htmlhoster.com/p/J7TKC0V9/IMG_0557.jpg';
+            img.style.opacity = '1';
+        }, 500);
+    }
+
+    if (bgElapsed > 22000 && window.sceneStep === 1) {
+        window.sceneStep = 2;
+        const monster = document.getElementById('monster');
+        monster.style.display = 'block';
+        img.style.opacity = '0';
+        setTimeout(() => {
+            img.src = 'https://i.pinimg.com/1200x/8a/8f/6e/8a8f6e92e0c128f34c510961a5db2ace.jpg';
             img.style.opacity = '1';
         }, 500);
     }
