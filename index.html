@@ -17,6 +17,22 @@
         
         <canvas id="canvas1"></canvas> <!--don't delete-->
         
-        <script src="script.js"> </script>
+  <script src="script.js"></script>
+<script>
+let bgElapsed = 0;
+let bgChanged = false;
+setInterval(() => {
+    bgElapsed += 100;
+    if (bgElapsed > 4000 && !bgChanged) {
+        bgChanged = true;
+        const img = document.getElementById('bg');
+        img.style.opacity = '0';
+        setTimeout(() => {
+            img.src = 'https://htmlhoster.com/p/J7TKC0V9/IMG_0557.jpg';
+            img.style.opacity = '1';
+        }, 500);
+    }
+}, 100);
+</script>
     </body>
 </html>

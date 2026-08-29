@@ -55,8 +55,8 @@ window.addEventListener('load', function() {
             }
             this.y += this.speedY;
             this.x += this.speedX;
-            //if (this.y > 300) this.y = 300;
-            //if (this.y < 50) this.y = 50;
+            if (this.y > 100) this.y = 100;
+            if (this.y < 50) this.y = 50;
         }
         draw(context) {
             const w = this.width * 0.5;
