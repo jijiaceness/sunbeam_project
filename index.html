@@ -8,27 +8,15 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <!-- characters -->
+        <!--players-->
+        <!--environment-->
+        <img id="layer1" src="https://htmlhoster.com/p/VSSNR176/Untitled7_20260829130330%20(2).PNG" style="position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; z-index: 15;">
+        <img id="bg" src="https://htmlhoster.com/p/8Z169XX4/Screenshot_29-8-2026_113458_hdwallsbox.com.jpeg" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; transition: opacity 0.5s;">
         
-        <!-- props -->
-
-        <!-- environment -->
-<img id="floor" src="https://htmlhoster.com/p/VSSNR176/Untitled7_20260829130330%20(2).PNG" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; z-index: 5;">
-        <canvas id="canvas1"></canvas>
-<img id="bg" src="https://htmlhoster.com/p/8Z169XX4/Screenshot_29-8-2026_113458_hdwallsbox.com.jpeg" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; transition: opacity 0.5s;">
-
-<script>
-document.addEventListener('scroll', () => {
-    const img = document.getElementById('bg');
-    if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
-        img.style.opacity = '0';
-        setTimeout(() => {
-            img.src = 'https://via.placeholder.com/1920x1080/00ff00/ffffff?text=Background+2';
-            img.style.opacity = '1';
-        }, 500);
-    }
-});
-</script>
-        <script src="script.js"></script>
+     
+        
+        <canvas id="canvas1"></canvas> <!--don't delete-->
+        
+        <script src="script.js"> </script>
     </body>
 </html>
