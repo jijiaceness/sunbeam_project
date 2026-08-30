@@ -24,17 +24,6 @@ window.addEventListener('load', function() {
             });
         }
     }
-    class Sword {
-        constructor(game) {
-            this.game = game;
-            this.width = 100;
-            this.height = 100;
-            this.x = 300;
-            this.y = 150;
-        }
-        update() {
-        }
-    }
     class Particle {
 
     }
@@ -44,7 +33,7 @@ window.addEventListener('load', function() {
             this.width = 120;
             this.height = 190;
             this.x = 20;
-            this.y = 100;
+            this.y = 360;
             this.speedY = 0;
             this.speedX = 0;
             this.knockbackCooldown = 0;
@@ -53,39 +42,23 @@ window.addEventListener('load', function() {
         }
 
         update() {
-            // Show sword once scene 2 starts
-            if (window.sceneStep >= 1) {
-                const sword = document.getElementById('sword');
-                sword.style.display = 'block';
-                if (window.sceneStep >= 2) {
-                    sword.style.left = 300 + 'px';
-                    sword.style.top = 150 + 'px';
-                    sword.style.height = 100 + 'px';
-                    sword.style.width = 100 + 'px';
-                }
-            }
+     if (window.sceneStep === 2) {
+    const monster = document.getElementById('monster');
+    const monsterX = 400;
+    const monsterY = 150;
+    const monsterWidth = 100;
+    const monsterHeight = 100;
 
-            // Monster collision check (only during scene 2)
-            if (window.sceneStep === 1) {
-                const monster = document.getElementById('monster');
-                monster.style.display = 'block';
-                const monsterX = 400;
-                const monsterY = 150;
-                const monsterWidth = 100;
-                const monsterHeight = 100;
+    const touching = this.x < monsterX + monsterWidth &&
+        this.x + this.width > monsterX &&
+        this.y < monsterY + monsterHeight &&
+        this.y + this.height > monsterY;
 
-                if (this.knockbackCooldown > 0) this.knockbackCooldown--;
-
-                const touching = this.x < monsterX + monsterWidth &&
-                    this.x + this.width > monsterX &&
-                    this.y < monsterY + monsterHeight &&
-                    this.y + this.height > monsterY;
-
-                if (touching && this.knockbackCooldown === 0) {
-                    this.x -= 50;
-                    this.knockbackCooldown = 30;
-                }
-            }
+    if (touching) {
+        monster.style.transform = 'rotate(90deg)';
+        monster.style.transition = 'transform 0.5s';
+    }
+}
 
             if (this.game.keys.includes('ArrowUp')) this.speedY = -1;
             else if (this.game.keys.includes('ArrowDown')) this.speedY = 1;
@@ -97,13 +70,20 @@ window.addEventListener('load', function() {
             }
             this.y += this.speedY;
             this.x += this.speedX;
-            if (this.y > 150) this.y = 150;
-            if (this.y < 50) this.y = 50;
+            if (this.y > 360) this.y = 360;
+            if (this.y < 200) this.y = 200;
+
+            if (player.x >= 300) {
+                setOpacity('sword', 0);
+            }
         }
         draw(context) {
-            const w = this.width * 0.5;
+            const w = 50;
             const h = w * (190/120);
             context.drawImage(this.image, this.x, this.y, w, h);
+        }
+        positionx() {
+            return this.x;
         }
     }
     class Enemy {
@@ -114,10 +94,10 @@ window.addEventListener('load', function() {
             this.game = game;
             this.image = image;
             this.speedModifier = speedModifier;
-            this.width = 1768;
+            this.width = canvas.width;
             this.height = 500;
             this.x = 0;
-            this.y = 0;
+            this.y =  this.height - 300;
         }
         update() {
             if (this.x <= -700) this.x = 0;
@@ -145,12 +125,32 @@ window.addEventListener('load', function() {
     class UI {
 
     }
+    class Sword {
+        constructor(game) {
+            this.game = game;
+            this.width = 100;
+            this.height = 100;
+            this.x = 100;
+            this.y = 380;
+            this.image = document.getElementById('sword');
+            SetOpacity('sword', 0);
+        }
+        update() {
+    
+        }
+        draw(context) {
+            const w = 25;
+            const h = 50;
+            ctx.drawImage(this.image, this.x, this.y, w, h);
+        }
+    }
     class Game {
         constructor(width, height) {
             this.width = width;
             this.height = height;
             this.background = new Background(this);
             this.player = new Player(this);
+            this.sword = new Sword(this);
             this.input = new InputHandler(this);
             this.keys = [];
             this.speed = 5;
@@ -158,10 +158,14 @@ window.addEventListener('load', function() {
         update() {
             this.player.update();
             this.background.update();
+            this.sword.update();
+            this.sword.x = this.player.x + 20;
+            this.sword.y = this.player.y + 20;
         }
         draw(context) {
             this.background.draw(context);
             this.player.draw(context);
+            this.sword.draw(context);
         }
     }
 
@@ -174,4 +178,11 @@ window.addEventListener('load', function() {
         requestAnimationFrame(animate);
     }
     animate();
+    function SetOpacity( imageid, opacity ) {
+        var s= document.getElementById(imageid).style;
+        s.opacity = ( opacity / 100 );
+        s.MozOpacity = ( opacity / 100 );
+        s.KhtmlOpacity = ( opacity / 100 );
+        s.filter = 'alpha(opacity=' + opacity + ')';
+    }
 });
