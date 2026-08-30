@@ -44,11 +44,10 @@ window.addEventListener('load', function() {
         update() {
      if (window.sceneStep === 2) {
     const monster = document.getElementById('monster');
-    const monsterX = 400;
-    const monsterY = 150;
-    const monsterWidth = 100;
-    const monsterHeight = 100;
-
+    const monsterX = 250;
+const monsterY = 0;
+const monsterWidth = 200;
+const monsterHeight = 300;
     const touching = this.x < monsterX + monsterWidth &&
         this.x + this.width > monsterX &&
         this.y < monsterY + monsterHeight &&
