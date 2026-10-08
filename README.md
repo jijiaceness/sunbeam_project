@@ -4,3 +4,4 @@ https://prod.liveshare.vsengsaas.visualstudio.com/join?BF10CA44F750CAEA08194710A
 http://127.0.0.1:3000/index.html?vscode-livepreview=true 
 
 [https://jijiaceness.github.io/sunbeam_project/](https://jijiaceness.github.io/sunbeam_project/)
+we need to fix sword monster and diolauge maybe we should mess around with 3D rendering on GODOT  
